@@ -8,8 +8,9 @@ Adafruit_AS726x ams;
 
 //buffer to hold raw values
 uint16_t sensorValues[AS726x_NUM_CHANNELS];
-//buffer to hold calibrated values
-float calibratedValues[AS726x_NUM_CHANNELS];
+
+//buffer to hold calibrated values (not used by default in this example)
+//float calibratedValues[AS726x_NUM_CHANNELS];
 
 void setup() {
   Serial.begin(9600);
@@ -27,12 +28,6 @@ void setup() {
 
 void loop() {
 
-  //flash the indicator LED
-  ams.indicatorOn();
-  delay(1000);
-  ams.indicatorOff();
-  delay(1000);
-
   //read the device temperature
   uint8_t temp = ams.readTemperature();
   
@@ -43,13 +38,13 @@ void loop() {
   bool rdy = false;
   while(!rdy){
     delay(5);
-    rdy = ams.dataAvailable();
+    rdy = ams.dataReady();
   }
   //ams.drvOff(); //uncomment this if you want to use the driver LED for readings
 
   //read the values!
   ams.readRawValues(sensorValues);
-  ams.readCalibratedValues(calibratedValues);
+  //ams.readCalibratedValues(calibratedValues);
 
   Serial.print("Temp: "); Serial.print(temp);
   Serial.print(" Violet: "); Serial.print(sensorValues[VIOLET]);

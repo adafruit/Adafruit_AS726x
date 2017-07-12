@@ -130,16 +130,8 @@ class Adafruit_AS726x {
 		//turn off the drv led
 		void drvOff();
 		
-		//turn on the indicator led
-		void indicatorOn();
-		//turn off the indicator led
-		void indicatorOff();
-		
 		//set current through drv led
 		void setDrvCurrent(uint8_t current);
-		
-		//set current through indicator led
-		void setIndCurrent(uint8_t current);
 		
 		/*===== END LED STUFF ======*/
 		
@@ -153,7 +145,7 @@ class Adafruit_AS726x {
 		
 		//read sensor data
 		void startMeasurement();
-		bool dataAvailable() { return virtualRead(AS726X_CONTROL_SETUP) & 0x02; }
+		bool dataReady() { return virtualRead(AS726X_CONTROL_SETUP) & 0x02; }
 		
 		uint8_t readTemperature() { return virtualRead(AS726X_DEVICE_TEMP); }
 		uint16_t readChannel(uint8_t channel);

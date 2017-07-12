@@ -22,9 +22,6 @@ bool Adafruit_AS726x::begin(uint8_t addr)
 	setDrvCurrent(LIMIT_12MA5);
 	drvOff();
 	
-	setIndCurrent(LIMIT_1MA);
-	indicatorOff();
-	
 	setIntegrationTime(50);
 	
 	setGain(GAIN_64X);
@@ -50,30 +47,10 @@ void Adafruit_AS726x::drvOff()
 	virtualWrite(AS726X_LED_CONTROL, _led_control.get());
 }
 
-//turn on the indicator led
-void Adafruit_AS726x::indicatorOn()
-{
-	_led_control.LED_IND = 1;
-	virtualWrite(AS726X_LED_CONTROL, _led_control.get());
-}
-//turn off the indicator led
-void Adafruit_AS726x::indicatorOff()
-{
-	_led_control.LED_IND = 0;
-	virtualWrite(AS726X_LED_CONTROL, _led_control.get());
-}
-
 //set current through drv led
 void Adafruit_AS726x::setDrvCurrent(uint8_t current)
 {
 	_led_control.ICL_DRV = current;
-	virtualWrite(AS726X_LED_CONTROL, _led_control.get());
-}
-
-//set current through indicator led
-void Adafruit_AS726x::setIndCurrent(uint8_t current)
-{
-	_led_control.ICL_IND = current;
 	virtualWrite(AS726X_LED_CONTROL, _led_control.get());
 }
 
@@ -178,9 +155,11 @@ void Adafruit_AS726x::readCalibratedValues(float *buf, uint8_t num){
 
 float Adafruit_AS726x::readCalibratedValue(uint8_t channel)
 {
-	uint32_t val = (uint32_t)(virtualRead(channel) << 24) | (uint32_t)(virtualRead(channel + 1) << 16) | (uint32_t)(virtualRead(channel + 2) << 8) | (uint32_t)virtualRead(channel + 3);
+	uint32_t val = 0;
+	val = ((uint32_t)virtualRead(channel) << 24) | ((uint32_t)virtualRead(channel + 1) << 16) | ((uint32_t)virtualRead(channel + 2) << 8) | (uint32_t)virtualRead(channel + 3);
+
 	float ret;
-	memcpy(&ret, &val, sizeof(float));
+	memcpy(&ret, &val, 4);
 	return ret;
 }
 
