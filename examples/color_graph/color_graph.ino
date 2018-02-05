@@ -84,7 +84,7 @@ void loop() {
   if(ams.dataReady()){
     
     //read the values!
-    ams.readRawValues(sensorValues);
+    //ams.readRawValues(sensorValues);
     ams.readCalibratedValues(calibratedValues);
     
     for(int i=0; i<AS726x_NUM_CHANNELS; i++){
