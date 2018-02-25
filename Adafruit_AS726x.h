@@ -188,6 +188,11 @@ class Adafruit_AS726x {
 		
 		/*========= LED STUFF =========*/
 		
+		// Set indicator LED current
+		void setIndicateCurrent(uint8_t current);
+		// turn on/off indicator
+		void indicateLED(boolean on);
+
 		//turn on the drv led
 		void drvOn();
 		//turn off the drv led

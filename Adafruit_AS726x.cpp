@@ -50,6 +50,8 @@ bool Adafruit_AS726x::begin(TwoWire *theWire)
 	
 	//TODO: add support for other devices
 	if(version != 0x40) return false;
+
+	enableInterrupt();
 	
 	setDrvCurrent(LIMIT_12MA5);
 	drvOff();
@@ -94,6 +96,31 @@ void Adafruit_AS726x::drvOff()
 void Adafruit_AS726x::setDrvCurrent(uint8_t current)
 {
 	_led_control.ICL_DRV = current;
+	virtualWrite(AS726X_LED_CONTROL, _led_control.get());
+}
+
+/**************************************************************************/
+/*! 
+    @brief  turn on/off the indicator LED
+    @param  on True if you want the LED on, False to turn off
+*/
+/**************************************************************************/
+void Adafruit_AS726x::indicateLED(boolean on)
+{
+  _led_control.LED_IND = on;
+  virtualWrite(AS726X_LED_CONTROL, _led_control.get());
+}
+
+
+/**************************************************************************/
+/*! 
+    @brief  set the current limit for the driver LED.
+    @param current the current limit setting. Should be one of LIMIT_1MA, LIMIT_2MA, LIMIT_4MA, or LIMIT_8MA
+*/
+/**************************************************************************/
+void Adafruit_AS726x::setIndicateCurrent(uint8_t current)
+{
+	_led_control.ICL_IND = current;
 	virtualWrite(AS726X_LED_CONTROL, _led_control.get());
 }
 
@@ -320,6 +347,7 @@ void Adafruit_AS726x::virtualWrite(uint8_t addr, uint8_t value)
 	}
 	// Send the virtual register address (setting bit 7 to indicate a pending write).
 	write8(AS726X_SLAVE_WRITE_REG, (addr | 0x80));
+	//Serial.print("Address $"); Serial.print(addr, HEX);
 	while (1)
 	{
 	// Read the slave I²C status to see if the write buffer is ready.
@@ -330,6 +358,7 @@ void Adafruit_AS726x::virtualWrite(uint8_t addr, uint8_t value)
 	}
 	// Send the data to complete the operation.
 	write8(AS726X_SLAVE_WRITE_REG, value);
+	//Serial.print(" = 0x"); Serial.println(value, HEX);
 }
 
 void Adafruit_AS726x::read(uint8_t reg, uint8_t *buf, uint8_t num)
