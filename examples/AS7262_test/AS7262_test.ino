@@ -47,12 +47,12 @@ void loop() {
   //ams.readCalibratedValues(calibratedValues);
 
   Serial.print("Temp: "); Serial.print(temp);
-  Serial.print(" Violet: "); Serial.print(sensorValues[VIOLET]);
-  Serial.print(" Blue: "); Serial.print(sensorValues[BLUE]);
-  Serial.print(" Green: "); Serial.print(sensorValues[GREEN]);
-  Serial.print(" Yellow: "); Serial.print(sensorValues[YELLOW]);
-  Serial.print(" Orange: "); Serial.print(sensorValues[ORANGE]);
-  Serial.print(" Red: "); Serial.print(sensorValues[RED]);
+  Serial.print(" Violet: "); Serial.print(sensorValues[AS726x_VIOLET]);
+  Serial.print(" Blue: "); Serial.print(sensorValues[AS726x_BLUE]);
+  Serial.print(" Green: "); Serial.print(sensorValues[AS726x_GREEN]);
+  Serial.print(" Yellow: "); Serial.print(sensorValues[AS726x_YELLOW]);
+  Serial.print(" Orange: "); Serial.print(sensorValues[AS726x_ORANGE]);
+  Serial.print(" Red: "); Serial.print(sensorValues[AS726x_RED]);
   Serial.println();
   Serial.println();
 }
