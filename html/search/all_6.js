@@ -1,0 +1,20 @@
+var searchData=
+[
+  ['readblue',['readBlue',['../class_adafruit___a_s726x.html#a057c25dd6c1501e83e9131533441cfaa',1,'Adafruit_AS726x']]],
+  ['readcalibratedblue',['readCalibratedBlue',['../class_adafruit___a_s726x.html#ac928678c037cd8f0335e105400c95007',1,'Adafruit_AS726x']]],
+  ['readcalibratedgreen',['readCalibratedGreen',['../class_adafruit___a_s726x.html#a115900b27ee93097bd8a956699e6f7f5',1,'Adafruit_AS726x']]],
+  ['readcalibratedorange',['readCalibratedOrange',['../class_adafruit___a_s726x.html#a834ded2b325305802f88fe34d4588c6c',1,'Adafruit_AS726x']]],
+  ['readcalibratedred',['readCalibratedRed',['../class_adafruit___a_s726x.html#a61e3a8f7b9919d462d39df41b3282bfa',1,'Adafruit_AS726x']]],
+  ['readcalibratedvalue',['readCalibratedValue',['../class_adafruit___a_s726x.html#a6d418e5901db476b84bb3c24b403fe94',1,'Adafruit_AS726x']]],
+  ['readcalibratedvalues',['readCalibratedValues',['../class_adafruit___a_s726x.html#a632823ece5ce0006064a74add172aa49',1,'Adafruit_AS726x']]],
+  ['readcalibratedviolet',['readCalibratedViolet',['../class_adafruit___a_s726x.html#aa0fe34b9d2735f9dd955b35672043b54',1,'Adafruit_AS726x']]],
+  ['readcalibratedyellow',['readCalibratedYellow',['../class_adafruit___a_s726x.html#a44df458e38c25ade2dbf589915b23c39',1,'Adafruit_AS726x']]],
+  ['readchannel',['readChannel',['../class_adafruit___a_s726x.html#a1bffa4ccc234f59f5badf44dc382f582',1,'Adafruit_AS726x']]],
+  ['readgreen',['readGreen',['../class_adafruit___a_s726x.html#aeb4af8434448169d93bad4ac6bed20f8',1,'Adafruit_AS726x']]],
+  ['readorange',['readOrange',['../class_adafruit___a_s726x.html#a74ff19a61964fc97338257209b528715',1,'Adafruit_AS726x']]],
+  ['readrawvalues',['readRawValues',['../class_adafruit___a_s726x.html#a19b997b108fcaa8611ee18fc14d04267',1,'Adafruit_AS726x']]],
+  ['readred',['readRed',['../class_adafruit___a_s726x.html#abe1784ea3362da5ed976c5bb1637be79',1,'Adafruit_AS726x']]],
+  ['readtemperature',['readTemperature',['../class_adafruit___a_s726x.html#a8030838cfc90a6b2446c08ee99bf942a',1,'Adafruit_AS726x']]],
+  ['readviolet',['readViolet',['../class_adafruit___a_s726x.html#a50cff38e83ecfb57fc6e17dc47205c4d',1,'Adafruit_AS726x']]],
+  ['readyellow',['readYellow',['../class_adafruit___a_s726x.html#a5c53cf3253e522a30ab5c0e494efecfa',1,'Adafruit_AS726x']]]
+];
