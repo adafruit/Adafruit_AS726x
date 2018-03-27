@@ -1,4 +1,19 @@
-//TODO: write header
+/***************************************************************************
+  This is a library for the Adafruit AS7262 6-Channel Visible Light Sensor
+
+  This sketch reads the sensor
+
+  Designed specifically to work with the Adafruit AS7262 breakout
+  ----> http://www.adafruit.com/products/3779
+  
+  These sensors use I2C to communicate. The device's I2C address is 0x49
+  Adafruit invests time and resources providing this open source code,
+  please support Adafruit andopen-source hardware by purchasing products
+  from Adafruit!
+  
+  Written by Dean Miller for Adafruit Industries.
+  BSD license, all text above must be included in any redistribution
+ ***************************************************************************/
 
 #include <Wire.h>
 #include "Adafruit_AS726x.h"
