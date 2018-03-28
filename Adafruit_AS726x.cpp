@@ -8,7 +8,7 @@
  *  Driver for the AS726x family of spectral sensors
  *
  *  This is a library for the Adafruit AS726x breakout
- *  ----> https://www.adafruit.com/products/xxx
+ *  ----> https://www.adafruit.com/products/3779
  *    
  *  Adafruit invests time and resources providing this open source code, 
  *  please support Adafruit and open-source hardware by purchasing 
