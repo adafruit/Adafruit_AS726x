@@ -2,7 +2,7 @@
  * @file Adafruit_AS726x.h
  *
  * This is a library for the Adafruit AS726x breakout board
- * ----> https://www.adafruit.com/products/xxxx
+ * ----> https://www.adafruit.com/products/3779
  * 
  * Adafruit invests time and resources providing this open source code, 
  * please support Adafruit and open-source hardware by purchasing 
