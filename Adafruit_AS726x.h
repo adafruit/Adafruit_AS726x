@@ -208,11 +208,20 @@ class Adafruit_AS726x {
 		void setIntegrationTime(uint8_t time);
 		void enableInterrupt();
 		void disableInterrupt();
+
+		/*====== DISCOVERY ========*/
+
+		uint8_t getDeviceType() { return virtualRead(AS726X_HW_VERSION);  }
+		uint8_t getHwVersion()  { return virtualRead(AS726X_HW_VERSION+1);}
+		uint16_t getFwVersion() { return (virtualRead(AS726X_FW_VERSION+1)<<8) | virtualRead(AS726X_FW_VERSION);}
+	
 		
 		/*====== MEASUREMENTS ========*/
 		
 		//read sensor data
 		void startMeasurement();
+
+		void startMeasurement(uint8_t mode, uint8_t interrupt=0);
 
 		/*! 
 		    @brief  Check if the sensor is ready to return data
