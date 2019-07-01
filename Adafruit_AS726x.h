@@ -211,9 +211,23 @@ class Adafruit_AS726x {
 
 		/*====== DISCOVERY ========*/
 
-		uint8_t getDeviceType() { return virtualRead(AS726X_HW_VERSION);  }
-		uint8_t getHwVersion()  { return virtualRead(AS726X_HW_VERSION+1);}
-		uint16_t getFwVersion() { return (virtualRead(AS726X_FW_VERSION+1)<<8) | virtualRead(AS726X_FW_VERSION);}
+		/*! 
+		    @brief  Get the device type number, as stated in the datasheet
+		    @return 8-bit device type (currently 0x40).
+		*/
+		uint8_t getDeviceType() { return virtualRead(AS726X_HW_VERSION); }
+
+		/*! 
+		    @brief  Get the hardware version, as stated in the datasheet
+		    @return 8-bit hardware version.
+		*/
+		uint8_t getHwVersion()  { return virtualRead(AS726X_HW_VERSION+1); }
+
+		/*! 
+		    @brief  Get the firmware version, as stated in the datasheet
+		    @return 8-bit firmware version.
+		*/
+		uint16_t getFwVersion() { return (virtualRead(AS726X_FW_VERSION+1)<<8) | virtualRead(AS726X_FW_VERSION); }
 	
 		
 		/*====== MEASUREMENTS ========*/
@@ -221,7 +235,6 @@ class Adafruit_AS726x {
 		//read sensor data
 		void startMeasurement();
 
-		void startMeasurement(uint8_t mode, uint8_t interrupt=0);
 
 		/*! 
 		    @brief  Check if the sensor is ready to return data

@@ -195,15 +195,6 @@ void Adafruit_AS726x::startMeasurement()
 	setConversionType(ONE_SHOT);
 }
 
-void Adafruit_AS726x::startMeasurement(uint8_t mode, uint8_t interrupt)
-{
-	_control_setup.DATA_RDY = 0;
-	_control_setup.INT      = interrupt;
-	_control_setup.BANK     = mode;
-	virtualWrite(AS726X_CONTROL_SETUP, _control_setup.get());
-}
-
-
 /**************************************************************************/
 /*! 
     @brief  read an individual raw spectral channel
