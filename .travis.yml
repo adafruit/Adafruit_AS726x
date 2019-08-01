@@ -9,14 +9,12 @@ branches:
 env:
   global:
      - PRETTYNAME="Adafruit AS726x Arduino Library"
-# Optional, will default to "$TRAVIS_BUILD_DIR/Doxyfile"
-#    - DOXYFILE: $TRAVIS_BUILD_DIR/Doxyfile
 
 before_install:
    - source <(curl -SLs https://raw.githubusercontent.com/adafruit/travis-ci-arduino/master/install.sh)
 
 install:
-   - arduino --install-library "Adafruit ST7735 Library","Adafruit GFX Library"
+   - arduino --install-library "Adafruit ST7735 and ST7789 Library","Adafruit GFX Library"
 
 script:
    - build_main_platforms
