@@ -46,10 +46,10 @@ bool Adafruit_AS726x::begin(TwoWire *theWire)
 	delay(1000);
 	
 	//try to read the version reg to make sure we can connect
-	uint8_t version = virtualRead(AS726X_HW_VERSION);
+	uint8_t deviceType = virtualRead(AS726X_HW_VERSION);
 	
 	//TODO: add support for other devices
-	if(version != 0x40) return false;
+	if(deviceType != 0x40) return false;
 
 	enableInterrupt();
 	
@@ -195,7 +195,6 @@ void Adafruit_AS726x::startMeasurement()
 	setConversionType(ONE_SHOT);
 }
 
-
 /**************************************************************************/
 /*! 
     @brief  read an individual raw spectral channel
@@ -282,17 +281,23 @@ void Adafruit_AS726x::readCalibratedValues(float *buf, uint8_t num){
 /*! 
     @brief  read an individual calibrated spectral channel
     @param channel the channel to read
-    @return the reading as a raw 16-bit integer
+    @return the reading as a 32-bit floating point
 */
 /**************************************************************************/
+
+typedef union calibrated_value {
+	float    asFP;
+	uint32_t asInt;
+} calibrated_value_t;
+
+
 float Adafruit_AS726x::readCalibratedValue(uint8_t channel)
 {
-	uint32_t val = 0;
-	val = ((uint32_t)virtualRead(channel) << 24) | ((uint32_t)virtualRead(channel + 1) << 16) | ((uint32_t)virtualRead(channel + 2) << 8) | (uint32_t)virtualRead(channel + 3);
+	calibrated_value_t value;
+	value.asInt = 0;
+	value.asInt = ((uint32_t)virtualRead(channel) << 24) | ((uint32_t)virtualRead(channel + 1) << 16) | ((uint32_t)virtualRead(channel + 2) << 8) | (uint32_t)virtualRead(channel + 3);
 
-	float ret;
-	memcpy(&ret, &val, 4);
-	return ret;
+	return value.asFP;
 }
 
 void Adafruit_AS726x::write8(byte reg, byte value)
@@ -313,21 +318,21 @@ uint8_t Adafruit_AS726x::virtualRead(uint8_t addr)
 	volatile uint8_t status, d;
 	while (1)
 	{
-	// Read slave I²C status to see if the read buffer is ready.
-	status = read8(AS726X_SLAVE_STATUS_REG);
-	if ((status & AS726X_SLAVE_TX_VALID) == 0)
-	// No inbound TX pending at slave. Okay to write now.
-	break;
+		// Read slave I²C status to see if the read buffer is ready.
+		status = read8(AS726X_SLAVE_STATUS_REG);
+		if ((status & AS726X_SLAVE_TX_VALID) == 0)
+			// No inbound TX pending at slave. Okay to write now.
+			break;
 	}
 	// Send the virtual register address (setting bit 7 to indicate a pending write).
 	write8(AS726X_SLAVE_WRITE_REG, addr);
 	while (1)
 	{
-	// Read the slave I²C status to see if our read data is available.
-	status = read8(AS726X_SLAVE_STATUS_REG);
-	if ((status & AS726X_SLAVE_RX_VALID) != 0)
-	// Read data is ready.
-	break;
+		// Read the slave I²C status to see if our read data is available.
+		status = read8(AS726X_SLAVE_STATUS_REG);
+		if ((status & AS726X_SLAVE_RX_VALID) != 0)
+			// Read data is ready.
+			break;
 	}
 	// Read the data to complete the operation.
 	d = read8(AS726X_SLAVE_READ_REG);
@@ -339,22 +344,22 @@ void Adafruit_AS726x::virtualWrite(uint8_t addr, uint8_t value)
 	volatile uint8_t status;
 	while (1)
 	{
-	// Read slave I²C status to see if the write buffer is ready.
-	status = read8(AS726X_SLAVE_STATUS_REG);
-	if ((status & AS726X_SLAVE_TX_VALID) == 0)
-	// No inbound TX pending at slave. Okay to write now.
-	break;
+		// Read slave I²C status to see if the write buffer is ready.
+		status = read8(AS726X_SLAVE_STATUS_REG);
+		if ((status & AS726X_SLAVE_TX_VALID) == 0)
+			// No inbound TX pending at slave. Okay to write now.
+			break;
 	}
 	// Send the virtual register address (setting bit 7 to indicate a pending write).
 	write8(AS726X_SLAVE_WRITE_REG, (addr | 0x80));
 	//Serial.print("Address $"); Serial.print(addr, HEX);
 	while (1)
 	{
-	// Read the slave I²C status to see if the write buffer is ready.
-	status = read8(AS726X_SLAVE_STATUS_REG);
-	if ((status & AS726X_SLAVE_TX_VALID) == 0)
-	// No inbound TX pending at slave. Okay to write data now.
-	break;
+		// Read the slave I²C status to see if the write buffer is ready.
+		status = read8(AS726X_SLAVE_STATUS_REG);
+		if ((status & AS726X_SLAVE_TX_VALID) == 0)
+			// No inbound TX pending at slave. Okay to write data now.
+			break;
 	}
 	// Send the data to complete the operation.
 	write8(AS726X_SLAVE_WRITE_REG, value);
@@ -363,7 +368,7 @@ void Adafruit_AS726x::virtualWrite(uint8_t addr, uint8_t value)
 
 void Adafruit_AS726x::read(uint8_t reg, uint8_t *buf, uint8_t num)
 {
-	uint8_t value;
+	//uint8_t value;
 	uint8_t pos = 0;
 	
 	//on arduino we need to read in 32 byte chunks
@@ -381,6 +386,7 @@ void Adafruit_AS726x::read(uint8_t reg, uint8_t *buf, uint8_t num)
 		}
 	}
 }
+
 void Adafruit_AS726x::write(uint8_t reg, uint8_t *buf, uint8_t num)
 {
 	_i2c->beginTransmission((uint8_t)_i2caddr);
@@ -388,6 +394,7 @@ void Adafruit_AS726x::write(uint8_t reg, uint8_t *buf, uint8_t num)
 	_i2c->write((uint8_t *)buf, num);
 	_i2c->endTransmission();
 }
+
 void Adafruit_AS726x::_i2c_init()
 {
 	_i2c->begin();
