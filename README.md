@@ -1,4 +1,4 @@
-# Adafruit AS726x Library [![Build Status](https://travis-ci.com/adafruit/Adafruit_AS726x.svg?branch=master)](https://travis-ci.com/adafruit/Adafruit_AS726x)
+# Adafruit AS726x Library [![Build Status](https://github.com/adafruit/Adafruit_AS726x/workflows/Arduino%20Library%20CI/badge.svg)](https://github.com/adafruit/Adafruit_AS726x/actions)
 
 <img src="https://cdn-shop.adafruit.com/970x728/3779-00.jpg" height="300"/>
 
