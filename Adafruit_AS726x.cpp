@@ -351,6 +351,7 @@ void Adafruit_AS726x::virtualWrite(uint8_t addr, uint8_t value) {
 void Adafruit_AS726x::read(uint8_t reg, uint8_t *buf, uint8_t num) {
   uint8_t value;
   uint8_t pos = 0;
+  uint8_t ret;
 
   // on arduino we need to read in 32 byte chunks
   while (pos < num) {
@@ -359,7 +360,11 @@ void Adafruit_AS726x::read(uint8_t reg, uint8_t *buf, uint8_t num) {
     _i2c->beginTransmission((uint8_t)_i2caddr);
     _i2c->write((uint8_t)reg + pos);
     _i2c->endTransmission();
-    _i2c->requestFrom((uint8_t)_i2caddr, read_now);
+    ret = _i2c->requestFrom((uint8_t)_i2caddr, read_now);
+    if (ret == 0){
+      /* In case the device does not response.*/
+      break;
+    }
 
     for (int i = 0; i < read_now; i++) {
       buf[pos] = _i2c->read();
