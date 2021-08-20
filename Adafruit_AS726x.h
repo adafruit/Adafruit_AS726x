@@ -23,7 +23,7 @@
 #include "WProgram.h"
 #endif
 
-#include <Wire.h>
+#include <Adafruit_I2CDevice.h>
 
 /*=========================================================================
     I2C ADDRESS/BITS
@@ -308,8 +308,8 @@ public:
   /*==== END MEASUREMENTS =====*/
 
 private:
-  TwoWire *_i2c;
-  uint8_t _i2caddr; ///< the I2C address of the sensor
+  Adafruit_I2CDevice *i2c_dev = NULL; ///< Pointer to I2C bus interface
+  uint8_t _i2caddr;                   ///< the I2C address of the sensor
 
   void write8(byte reg, byte value);
   uint8_t read8(byte reg);

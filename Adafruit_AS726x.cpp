@@ -34,8 +34,10 @@
 */
 /**************************************************************************/
 bool Adafruit_AS726x::begin(TwoWire *theWire) {
-  _i2c = theWire;
-  _i2c_init();
+  i2c_dev = new Adafruit_I2CDevice(_i2caddr, theWire);
+  if (!i2c_dev->begin()) {
+    return false;
+  }
 
   _control_setup.RST = 1;
   virtualWrite(AS726X_CONTROL_SETUP, _control_setup.get());
@@ -349,28 +351,11 @@ void Adafruit_AS726x::virtualWrite(uint8_t addr, uint8_t value) {
 }
 
 void Adafruit_AS726x::read(uint8_t reg, uint8_t *buf, uint8_t num) {
-  uint8_t value;
-  uint8_t pos = 0;
-
-  // on arduino we need to read in 32 byte chunks
-  while (pos < num) {
-
-    uint8_t read_now = min(32, num - pos);
-    _i2c->beginTransmission((uint8_t)_i2caddr);
-    _i2c->write((uint8_t)reg + pos);
-    _i2c->endTransmission();
-    _i2c->requestFrom((uint8_t)_i2caddr, read_now);
-
-    for (int i = 0; i < read_now; i++) {
-      buf[pos] = _i2c->read();
-      pos++;
-    }
-  }
+  uint8_t buffer[1] = {reg};
+  i2c_dev->write_then_read(buffer, 1, buf, num);
 }
+
 void Adafruit_AS726x::write(uint8_t reg, uint8_t *buf, uint8_t num) {
-  _i2c->beginTransmission((uint8_t)_i2caddr);
-  _i2c->write((uint8_t)reg);
-  _i2c->write((uint8_t *)buf, num);
-  _i2c->endTransmission();
+  uint8_t buffer[1] = {reg};
+  i2c_dev->write(buf, num, true, buffer, 1);
 }
-void Adafruit_AS726x::_i2c_init() { _i2c->begin(); }
