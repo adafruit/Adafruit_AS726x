@@ -26,6 +26,11 @@
 
 #include "Adafruit_AS726x.h"
 
+Adafruit_AS726x::~Adafruit_AS726x(void) {
+  if (i2c_dev)
+    delete i2c_dev;
+}
+
 /**************************************************************************/
 /*!
     @brief  Set up hardware and begin communication with the sensor
@@ -34,6 +39,8 @@
 */
 /**************************************************************************/
 bool Adafruit_AS726x::begin(TwoWire *theWire) {
+  if (i2c_dev)
+    delete i2c_dev;
   i2c_dev = new Adafruit_I2CDevice(_i2caddr, theWire);
   if (!i2c_dev->begin()) {
     return false;

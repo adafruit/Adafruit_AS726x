@@ -180,7 +180,7 @@ public:
      0x49.
   */
   Adafruit_AS726x(int8_t addr = AS726x_ADDRESS) { _i2caddr = addr; };
-  ~Adafruit_AS726x(void){};
+  ~Adafruit_AS726x(void);
 
   bool begin(TwoWire *theWire = &Wire);
 
